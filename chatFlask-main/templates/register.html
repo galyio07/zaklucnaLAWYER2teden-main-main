@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GT - Registracija</title>
+    <!-- Uvoz Bootstrap in ikon za lepši izgled -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #0f172a;
+            --dark-alt: #1e293b;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(3px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, var(--primary), var(--success));
+            bottom: -125px;
+            right: -125px;
+            animation-delay: -7s;
+        }
+
+        .shape-3 {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(45deg, var(--warning), var(--error));
+            top: 30%;
+            right: 15%;
+            animation-delay: -12s;
+        }
+
+        .shape-4 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            bottom: 20%;
+            left: 10%;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(90deg) scale(1.1); }
+            50% { transform: translateY(0) rotate(180deg) scale(0.9); }
+            75% { transform: translateY(-15px) rotate(270deg) scale(1.05); }
+        }
+
+        .register-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 480px;
+            padding: 0 1rem;
+        }
+
+        .register-card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .register-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--success));
+            z-index: 1;
+        }
+
+        .card-header {
+            padding: 3rem 2.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .brand-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4);
+            animation: pulse-glow 3s infinite;
+        }
+
+        .brand-logo::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary), var(--accent));
+            border-radius: 27px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .brand-logo i {
+            font-size: 2.2rem;
+            color: white;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 15px 35px rgba(139, 92, 246, 0.4); }
+            50% { box-shadow: 0 15px 35px rgba(139, 92, 246, 0.6), 0 0 40px rgba(139, 92, 246, 0.3); }
+        }
+
+        .brand-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+        }
+
+        .brand-subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 1rem 2.5rem 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1.1rem 1.1rem 1.1rem 3.2rem;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(71, 85, 105, 0.4);
+            border-radius: 14px;
+            color: #f1f5f9;
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 
+                0 0 0 3px rgba(99, 102, 241, 0.15),
+                0 0 25px rgba(99, 102, 241, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .form-input::placeholder {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group:focus-within .input-icon {
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .strength-bar {
+            height: 3px;
+            background: rgba(71, 85, 105, 0.3);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--error), var(--warning), var(--success));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.35);
+            margin-bottom: 2rem;
+        }
+
+        .register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .register-btn:hover::before {
+            left: 100%;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(139, 92, 246, 0.45);
+            background: linear-gradient(135deg, #a855f7, var(--secondary));
+        }
+
+        .register-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #475569, transparent);
+        }
+
+        .divider span {
+            margin: 0 1.5rem;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 0 0.8rem;
+        }
+
+        .login-link {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .login-link a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .login-link a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+        }
+
+        .error-alert {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            color: #fca5a5;
+            font-size: 0.9rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .success-alert {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            color: #6ee7b7;
+            font-size: 0.9rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 0 0.5rem;
+            }
+            
+            .card-header {
+                padding: 2.5rem 2rem 1.5rem;
+            }
+            
+            .card-body {
+                padding: 1rem 2rem 2.5rem;
+            }
+            
+            .brand-title {
+                font-size: 2.2rem;
+            }
+            
+            .brand-logo {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 1.5rem;
+            animation: floatIcon 15s infinite ease-in-out;
+        }
+
+        .floating-icon:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 20%; right: 15%; animation-delay: -3s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 20%; animation-delay: -6s; }
+        .floating-icon:nth-child(4) { bottom: 15%; right: 10%; animation-delay: -9s; }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            25% { transform: translateY(-20px) rotate(90deg); opacity: 0.2; }
+            50% { transform: translateY(0) rotate(180deg); opacity: 0.1; }
+            75% { transform: translateY(-10px) rotate(270deg); opacity: 0.15; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dekorativne oblike v ozadju -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="floating-elements">
+        <i class="fas fa-user-plus floating-icon"></i>
+        <i class="fas fa-shield-alt floating-icon"></i>
+        <i class="fas fa-key floating-icon"></i>
+        <i class="fas fa-envelope floating-icon"></i>
+    </div>
+
+    <div class="register-container">
+        <div class="register-card">
+            <div class="card-header">
+                <div class="brand-logo">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1 class="brand-title">GT</h1>
+                <p class="brand-subtitle">Pridruži se naslednji generaciji</p>
+            </div>
+            
+            <div class="card-body">
+                <!-- Prikaz napake ob napačni registraciji -->
+                {% if error %}
+                <div class="error-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <!-- Obrazec za registracijo -->
+                <form id="registerForm" method="POST" action="{{ url_for('registracija') }}">
+                    <div class="form-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" class="form-input" name="username" placeholder="Izberite uporabniško ime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" class="form-input" name="email" placeholder="Vnesite svoj e-poštni naslov" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-input" name="password" placeholder="Ustvarite močno geslo" required id="password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <i class="fas fa-check-circle input-icon"></i>
+                        <input type="password" class="form-input" name="confirm_password" placeholder="Ponovno vnesite geslo" required>
+                    </div>
+                    
+                    <button type="submit" class="register-btn">
+                        <i class="fas fa-rocket me-2"></i>
+                        Ustvari račun
+                    </button>
+                </form>
+                
+                <div class="divider">
+                    <span>Že imate račun?</span>
+                </div>
+                
+                <!-- Povezava do prijave -->
+                <div class="login-link">
+                    <a href="{{ url_for('prijava') }}">Prijava v račun <i class="fas fa-sign-in-alt ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

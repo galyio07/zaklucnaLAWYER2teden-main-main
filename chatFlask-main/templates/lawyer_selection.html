@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GT - Odvetniki</title>
+    <!-- Uvoz Bootstrap in ikon za lepši izgled -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #0f172a;
+            --dark-alt: #1e293b;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(99, 102, 241, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('slike/images.jpeg') center/cover no-repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .background-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(3px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            top: -150px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, var(--accent), var(--success));
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, var(--warning), var(--error));
+            top: 20%;
+            left: 10%;
+            animation-delay: -5s;
+        }
+
+        .shape-4 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            bottom: 20%;
+            right: 15%;
+            animation-delay: -15s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(0) rotate(180deg); }
+            75% { transform: translateY(-10px) rotate(270deg); }
+        }
+
+        .services-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 900px;
+            padding: 0 1rem;
+        }
+
+        .services-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.5),
+                0 10px 10px -5px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .services-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            z-index: 1;
+        }
+
+        .card-header {
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .brand-logo::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .brand-logo i {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .brand-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .welcome-text {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            color: #e2e8f0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .card-body {
+            padding: 1rem 2rem 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .service-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.8);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(99, 102, 241, 0.2),
+                0 0 30px rgba(99, 102, 241, 0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(99, 102, 241, 0.4);
+        }
+
+        .service-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .service-description {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-description {
+            opacity: 1;
+            max-height: 100px;
+            margin-top: 0.8rem;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, var(--error), #dc2626);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .logout-btn:hover::before {
+            left: 100%;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 2rem;
+            color: #64748b;
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                padding: 0 0.5rem;
+            }
+            
+            .card-header {
+                padding: 2rem 1.5rem 1rem;
+            }
+            
+            .card-body {
+                padding: 1rem 1.5rem 2rem;
+            }
+            
+            .brand-title {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .service-card h4 {
+                font-size: 1.1rem;
+            }
+            
+            .service-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dekorativne oblike v ozadju -->
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <div class="services-container">
+        <div class="services-card">
+            <div class="card-header">
+                <div class="brand-logo">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <h1 class="brand-title">GT Odvetniki</h1>
+                {% if uporabnisko_ime %}
+                <p class="welcome-text">Dobrodošli, {{ uporabnisko_ime }}!</p>
+                {% endif %}
+                <h3 class="section-title">Izberite svojega odvetnika</h3>
+            </div>
+            
+            <div class="card-body">
+                <div class="services-grid">
+                    <!-- Kartica za korporativnega odvetnika -->
+                    <div class="service-card" onclick="selectLawyer('Korporativni')">
+                        <div class="service-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h4>Korporativni Odvetnik</h4>
+                        <div class="service-description">
+                            Svetovanje pri ustanavljanju podjetij, prevzemih, pogodbah in gospodarskem pravu. Zastopanje pred sodišči v gospodarskih sporih.
+                        </div>
+                    </div>
+                    <!-- Kartica za kazenskega odvetnika -->
+                    <div class="service-card" onclick="selectLawyer('Kazenska prava')">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Kazenski Odvetnik</h4>
+                        <div class="service-description">
+                            Zastopanje v kazenskih postopkih, pravno svetovanje o kazenskem pravu, priprava obrambe in zastopanje pred sodiščem.
+                        </div>
+                    </div>
+                    <!-- Kartica za družinskega odvetnika -->
+                    <div class="service-card" onclick="selectLawyer('Družinski')">
+                        <div class="service-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h4>Družinski Odvetnik</h4>
+                        <div class="service-description">
+                            Pravno svetovanje pri ločitvah, skrbništvu otrok, preživninah, posvojitvah in drugih družinskih zadevah.
+                        </div>
+                    </div>
+                    <!-- Kartica za intelektualnega odvetnika -->
+                    <div class="service-card" onclick="selectLawyer('Intelektualni')">
+                        <div class="service-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Intelektualni Odvetnik</h4>
+                        <div class="service-description">
+                            Zaščita avtorskih pravic, blagovnih znamk, patentov in druge intelektualne lastnine. Svetovanje pri licenciranju in sporih.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gumb za odjavo -->
+                <div style="text-align: center;">
+                    <a href="{{ url_for('logout') }}" class="logout-btn">
+                        <i class="fas fa-sign-out-alt me-2"></i>
+                        Odjava
+                    </a>
+                </div>
+                
+                <p class="footer-text">© 2025 GT Odvetniki. Vse pravice pridržane.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funkcija za izbiro odvetnika in preusmeritev na chat
+        function selectLawyer(type) {
+            try {
+                console.log(`Izbran odvetnik: ${type}`);
+                window.location.href = `{{ url_for('lawyer_chat') }}?type=${type}`;
+            } catch (error) {
+                console.error('Napaka pri izbiri odvetnika:', error);
+            }
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
