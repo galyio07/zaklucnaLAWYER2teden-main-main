@@ -123,32 +123,46 @@ def lawyer_chat():
 def lawyer_chat_specialty(specialty):
     return redirect(url_for('lawyer_chat.html', type=specialty))
 
-# API za rezervacijo termina
+#API ZA REZERVACIJO
 @app.route('/api/schedule', methods=['POST'])
 def schedule():
-    data = request.get_json()
-    # Preveri, če so podatki poslani pravilno
-    if not data or 'datetime' not in data or 'lawyer' not in data:
-        return jsonify({'success': False, 'message': 'Manjkajoči podatki'}), 400
+    # Preberemo podatke, ki jih je uporabnik poslal
+    podatki = request.get_json()
 
-    # Naloži obstoječe rezervacije
+    # Preverimo, če so podatki sploh bili poslani
+    if podatki is None:
+        return jsonify({'success': False, 'message': 'Podatki niso bili poslani.'}), 400
+
+    # Preverimo, če so vsi obvezni podatki prisotni
+    if 'datetime' not in podatki:
+        return jsonify({'success': False, 'message': 'Datum in čas manjkajo.'}), 400
+
+
+    # Pripravimo prazen seznam rezervacij
+    rezervacije = []
+
+    # Če datoteka že obstaja, jo poskusimo prebrati
     if os.path.exists(RESERVATIONS_FILE):
-        with open(RESERVATIONS_FILE, 'r', encoding='utf-8') as f:
+        with open(RESERVATIONS_FILE, 'r', encoding='utf-8') as datoteka:
             try:
-                rezervacije = json.load(f)
+                rezervacije = json.load(datoteka)
             except:
                 rezervacije = []
-    else:
-        rezervacije = []
 
-    # Dodaj novo rezervacijo
-    rezervacije.append({'datetime': data['datetime'], 'lawyer': data['lawyer']})
+    # Ustvarimo novo rezervacijo
+    nova_rezervacija = {
+        'datetime': podatki['datetime'],
+        'lawyer': podatki['lawyer']
+    }
 
-    # Shrani vse rezervacije nazaj v datoteko
-    with open(RESERVATIONS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(rezervacije, f, ensure_ascii=False, indent=2)
+    # Dodamo novo rezervacijo v seznam vseh rezervacij
+    rezervacije.append(nova_rezervacija)
 
+    # Shranimo posodobljen seznam nazaj v datoteko
+    with open(RESERVATIONS_FILE, 'w', encoding='utf-8') as datoteka:
+        json.dump(rezervacije, datoteka, ensure_ascii=False, indent=2)
+
+    # Uporabniku sporočimo, da je bila rezervacija uspešna
     return jsonify({'success': True, 'message': 'Termin uspešno rezerviran!'})
-
 if __name__ == '__main__':
     app.run(debug=True)
