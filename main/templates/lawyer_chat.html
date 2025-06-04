@@ -353,26 +353,7 @@
             transform: translateY(0) scale(1);
         }
 
-        .calendar-btn {
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            background: rgba(99, 102, 241, 0.1);
-            color: #a5b4fc;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .calendar-btn:hover {
-            background: rgba(99, 102, 241, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
-        }
+        
 
         @media (max-width: 768px) {
             .sidebar {
@@ -431,9 +412,6 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
-                    <button id="open-calendar-btn" class="calendar-btn">
-                        <i class="fa-regular fa-calendar"></i> Rezerviraj termin
-                    </button>
                     <a href="lawyer_selection">
                         <button class="end-chat-btn">Zaključi</button>
                     </a>
@@ -449,18 +427,7 @@
         </div>
     </div>
 
-    <!-- Modal za izbiro termina -->
-    <div id="calendar-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:2000;align-items:center;justify-content:center;">
-        <div style="background:#1e293b;padding:30px;border-radius:16px;min-width:300px;max-width:90vw;">
-            <h3 style="color:#fff;">Izberi termin</h3>
-            <input type="datetime-local" id="calendar-input" style="margin:20px 0;padding:8px;border-radius:8px;border:1px solid #6366f1;">
-            <div>
-                <button id="calendar-submit" style="background:#6366f1;color:#fff;padding:8px 16px;border:none;border-radius:8px;margin-right:10px;">Pošlji</button>
-                <button id="calendar-cancel" style="background:#ef4444;color:#fff;padding:8px 16px;border:none;border-radius:8px;">Prekliči</button>
-            </div>
-            <div id="calendar-message" style="margin-top:10px;color:#10b981;"></div>
-        </div>
-    </div>
+    
 
     <script>
         // Funkcija za pridobivanje parametrov iz URL-ja (npr. tip odvetnika)
@@ -517,44 +484,7 @@
             if (event.key === 'Enter') {
                 sendMessage();
             }
-        });
-
-        // Prikaži modal za rezervacijo termina
-        document.getElementById('open-calendar-btn').onclick = function() {
-            document.getElementById('calendar-modal').style.display = 'flex';
-        };
-
-        // Skrij modal za rezervacijo termina
-        document.getElementById('calendar-cancel').onclick = function() {
-            document.getElementById('calendar-modal').style.display = 'none';
-            document.getElementById('calendar-message').textContent = '';
-        };
-
-        // Pošlji termin na strežnik (AJAX klic)
-        document.getElementById('calendar-submit').onclick = function() {
-            const datetime = document.getElementById('calendar-input').value;
-            if (!datetime) {
-                document.getElementById('calendar-message').textContent = 'Prosim izberite termin.';
-                return;
-            }
-            // Pošlji podatke o terminu na Flask backend
-            fetch('/api/schedule', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ datetime: datetime, lawyer: document.getElementById('lawyer-name').textContent })
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('calendar-message').textContent = 'Termin uspešno rezerviran!';
-                setTimeout(() => {
-                    document.getElementById('calendar-modal').style.display = 'none';
-                    document.getElementById('calendar-message').textContent = '';
-                }, 1500);
-            })
-            .catch(() => {
-                document.getElementById('calendar-message').textContent = 'Napaka pri rezervaciji.';
-            });
-        };
+        });   
     </script>
 </body>
 </html>

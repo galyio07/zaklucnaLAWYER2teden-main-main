@@ -123,46 +123,5 @@ def lawyer_chat():
 def lawyer_chat_specialty(specialty):
     return redirect(url_for('lawyer_chat.html', type=specialty))
 
-#API ZA REZERVACIJO
-@app.route('/api/schedule', methods=['POST'])
-def schedule():
-    # Preberemo podatke, ki jih je uporabnik poslal
-    podatki = request.get_json()
-
-    # Preverimo, če so podatki sploh bili poslani
-    if podatki is None:
-        return jsonify({'success': False, 'message': 'Podatki niso bili poslani.'}), 400
-
-    # Preverimo, če so vsi obvezni podatki prisotni
-    if 'datetime' not in podatki:
-        return jsonify({'success': False, 'message': 'Datum in čas manjkajo.'}), 400
-
-
-    # Pripravimo prazen seznam rezervacij
-    rezervacije = []
-
-    # Če datoteka že obstaja, jo poskusimo prebrati
-    if os.path.exists(RESERVATIONS_FILE):
-        with open(RESERVATIONS_FILE, 'r', encoding='utf-8') as datoteka:
-            try:
-                rezervacije = json.load(datoteka)
-            except:
-                rezervacije = []
-
-    # Ustvarimo novo rezervacijo
-    nova_rezervacija = {
-        'datetime': podatki['datetime'],
-        'lawyer': podatki['lawyer']
-    }
-
-    # Dodamo novo rezervacijo v seznam vseh rezervacij
-    rezervacije.append(nova_rezervacija)
-
-    # Shranimo posodobljen seznam nazaj v datoteko
-    with open(RESERVATIONS_FILE, 'w', encoding='utf-8') as datoteka:
-        json.dump(rezervacije, datoteka, ensure_ascii=False, indent=2)
-
-    # Uporabniku sporočimo, da je bila rezervacija uspešna
-    return jsonify({'success': True, 'message': 'Termin uspešno rezerviran!'})
 if __name__ == '__main__':
     app.run(debug=True)
